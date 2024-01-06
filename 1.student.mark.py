@@ -5,7 +5,7 @@ def course_number():
   return int(input("Input numbers of course: "))
 
 def student_info(student, course):
-  std_id = int(input("Input the student ID: "))
+  std_id = input("Input the student ID: ")
   std_name = input("Input the student name: ")
   std_DoB = input("Input date of birth: ")
   student[std_id] = {"Name": std_name, "Date of Birth": std_DoB}
@@ -61,14 +61,49 @@ def print_mark(course, student):
   while 1:
     if course_id in course:
       for x in student:
-        print(student[x]["Name"], student[x][course[course_id]["Course name"]])
+        print(student[x]["Name"],":" ,student[x][course[course_id]["Course name"]])
       print("--------------------------------------------------------")
       break
     else:
       print("Invalid id!!!")
       return print_mark(course, student)
   
-  
+ 
+def list_func(student, course):
+  print("LIST OF FUNCTIONS: \n")
+  print("1. List courses")
+  print("2. List student")
+  print("3. Input mark")
+  print("4. Print mark ")
+  print("5. Exit")
+  print("---")
+    
+  arg = int(input("Enter a function id: "))
+  match arg:
+    case 1:
+      list_courses(course)
+      print("---")
+      return list_func(student, course)
+    case 2:
+      list_students(student)
+      print("---")
+      return list_func(student, course)
+    case 3:
+      input_mark(course, student)
+      print("---")
+      return list_func(student, course)
+    case 4:
+      print_mark(course, student)
+      print("---")
+      return list_func(student, course)
+    case 5:
+      print("Exit")
+      exit()
+    case default:
+      print("Invalid ID")
+      print("--------------------------------")
+      return list_func(student, course)
+      
     
   
 def main():
@@ -79,8 +114,7 @@ def main():
   for x in range(course_num):
     print(f"Course {x+1}: \n")
     course_info(course)
-     
-  list_courses(course)
+  
   
   student_num = student_number()
   
@@ -89,13 +123,9 @@ def main():
     x = student
     student_info(student, course)
     
-    
-  list = list_students(student)
+  
+  list_func(student, course)
 
-  
-  input_mark(course, student)
-  
-  print_mark(course, student)
   
     
   
