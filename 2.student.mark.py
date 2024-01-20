@@ -1,49 +1,69 @@
 class Student:
+  def __init__(self):
+    print("--------------------------------")
+    self.__std_id = int(input("Enter student ID: "))
+    self.__std_name = input("Enter student name: ")
+    self.__std_age = int(input("Enter student age: "))
+    self.__std_DoB = int(input("Enter student DoB: "))
+    print("--------------------------------")
     
-  def numStd():
-    numStd = int(input("Enter the number of students: "))
-    
-  def setAttr(self):
-    for i in Student.numStd():
-      self.__std_name = str(input("Enter student name: "))
-      self.__std_age = int(input("Enter student age: "))
-    
+  def getStdId(self):
+    return self.__std_id
+  
+  def getStdDoB(self):
+    return self.__std_DoB
+  
   def getStdName(self):
     return self.__std_name
-    
-  def getStdAge(self):
+  
+  def getAge(self):
     return self.__std_age
   
   
-  def describe(self):
-    for i in Student.numStd:
-      print(f"Name: {self.std_name}")
-      print(f"Age: {self.std_age}")
-
-class Course:
-  
-  def __init__(self):
-    self.course_name = str(input("Enter course name: "))
+  def display(self):
+    print("--------------------------------")
+    print("Student Info: ")
+    print("ID:", self.__std_id)
+    print("Name:", self.__std_name)
+    print("Age:", self.__std_age)
+    print("Age:", self.__std_DoB)
     
-  def describe(self):
-    print(f"Course name: {self.course_name}")
-    
-class StudentMark:
-  
+class Course(Student):
   def __init__(self):
-    for i in Course.course_name:
-      self.mark_name = Course.course_name[i]
-      self.mark = int(input(f"Enter mark for {self.mark_name}: "))
-      
-  def describe(self):
-    print(f"Mark for {self.mark_name}: {self.mark}")
+    print("--------------------------------")
+    self.__course_id = int(input("Enter course ID: "))
+    self.__course_name = input("Enter course name: ")
+    print("--------------------------------")
   
+  def getCourseId(self):
+    return self.__course_id
+  
+  def getCourseName(self): 
+    return self.__course_name
+  
+  def display(self):
+    print("--------------------------------")
+    print("ID:", self.__course_id)
+    print("Name:", self.__course_name)
+    print("--------------------------------")
+  
+  def addMark(numStd, mark):
+    id = int(input("Enter course ID:"))
+    for i in range(numStd):
+      mark = float(input(f"Enter {Student[i].getStdName()}'s mark:"))
 def main():
-  student = Student()
-  student.describe()
-
-  course = Course()
-  course.describe()
+  student = {}
+  numStd = int(input("Enter number of students: "))
+  for x in range(numStd):
+    print(f"Student number {x+1}")
+    student[x] = Student()
   
+  for y in range(numStd):
+    print(f"Student number {y+1}")
+    student[y].display()  
+    
+  # for z in range(numStd):
+  #   mark = float(input(f"Enter {student[z].getStdName()}'s mark: "))
+     
   
 main()
