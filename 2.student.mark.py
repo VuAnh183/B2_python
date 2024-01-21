@@ -4,7 +4,7 @@ class Student:
     self.__std_id = int(input("Enter student ID: "))
     self.__std_name = input("Enter student name: ")
     self.__std_age = int(input("Enter student age: "))
-    self.__std_DoB = int(input("Enter student DoB: "))
+    self.__std_DoB = input("Enter student DoB: ")
     print("--------------------------------")
     
   def getStdId(self):
@@ -26,9 +26,9 @@ class Student:
     print("ID:", self.__std_id)
     print("Name:", self.__std_name)
     print("Age:", self.__std_age)
-    print("Age:", self.__std_DoB)
+    print("DoB:", self.__std_DoB)
     
-class Course(Student):
+class Course:
   def __init__(self):
     print("--------------------------------")
     self.__course_id = int(input("Enter course ID: "))
@@ -47,23 +47,31 @@ class Course(Student):
     print("Name:", self.__course_name)
     print("--------------------------------")
   
-  def addMark(numStd, mark):
+  def addMark():
     id = int(input("Enter course ID:"))
-    for i in range(numStd):
-      mark = float(input(f"Enter {Student[i].getStdName()}'s mark:"))
-def main():
+    mark = float(input("Enter student mark: "))
+                
+class func(Student, Course):
   student = {}
   numStd = int(input("Enter number of students: "))
-  for x in range(numStd):
-    print(f"Student number {x+1}")
-    student[x] = Student()
   
-  for y in range(numStd):
-    print(f"Student number {y+1}")
-    student[y].display()  
-    
-  # for z in range(numStd):
-  #   mark = float(input(f"Enter {student[z].getStdName()}'s mark: "))
+  def getStdInfo():
+    for x in range(numStd):
+      print(f"Student number {x+1}")
+      student[x] = Student()
+  
+  def displayStd():
+    for y in range(numStd):
+      print(f"Student number {y+1}")
+      student[y].display()  
+  
+  def addMark():
+    for i in range(numStd):
+      student[i].getStdName() 
+      mark = float(input(f"Student {student[i].getStdName()}'s mark: "))
+      setattr(student[i], "mark", mark)
+      print("Mark:", student[i].mark)
+        
      
   
-main()
+func(Student, Course)
