@@ -33,7 +33,6 @@ class Course:
     print("--------------------------------")
     self.__course_id = int(input("Enter course ID: "))
     self.__course_name = input("Enter course name: ")
-    print("--------------------------------")
   
   def getCourseId(self):
     return self.__course_id
@@ -45,33 +44,63 @@ class Course:
     print("--------------------------------")
     print("ID:", self.__course_id)
     print("Name:", self.__course_name)
-    print("--------------------------------")
+
   
   def addMark():
     id = int(input("Enter course ID:"))
     mark = float(input("Enter student mark: "))
+ 
+ 
                 
-class func(Student, Course):
+def func(Student, Course):
   student = {}
+  course = {}
+  print("--------------------------------------------------------")
   numStd = int(input("Enter number of students: "))
   
-  def getStdInfo():
-    for x in range(numStd):
-      print(f"Student number {x+1}")
-      student[x] = Student()
+  # def getStdInfo():
+  for x in range(numStd):
+    print(f"Student number {x+1}")
+    student[x] = Student()
   
-  def displayStd():
-    for y in range(numStd):
-      print(f"Student number {y+1}")
-      student[y].display()  
+  # def displayStd():
+  for y in range(numStd):
+    print(f"Student number {y+1}")
+    student[y].display()  
   
-  def addMark():
-    for i in range(numStd):
-      student[i].getStdName() 
-      mark = float(input(f"Student {student[i].getStdName()}'s mark: "))
-      setattr(student[i], "mark", mark)
-      print("Mark:", student[i].mark)
+  print("--------------------------------------------------------")
+  numCourse = int(input("Enter number of courses: "))
+  
+  for x in range(numCourse):
+    print(f"Course number {x+1}")
+    course[x] = Course()
+    
+  print("--------------------------------------------------------")  
+  for y in range(numCourse):
+    print(f"Course number {y+1}")
+    course[y].display()
+  
+  
+  print("--------------------------------------------------------")  
+  print("Input Marks:")
+  id = int(input("Enter the course ID: "))
+  for x in range(numCourse):
+    if id == course[x].getCourseId():
+      name = course[x].getCourseName()
+      for y in range(numStd):
+        mark = float(input(f"Student {student[y].getStdName()}'s mark: "))
+        setattr(student[y], "mark", mark)
         
+        
+  print("--------------------------------------------------------")
+  print("List Marks:")
+  id = int(input("Enter the course ID: "))
+  name = course[x].getCourseName()
+  print(f"{name} mark:")
+  for x in range(numCourse):
+    if id == course[x].getCourseId():
+      for y in range(numStd):
+        print(f"{student[y].getStdName()}:", student[y].mark)
      
   
 func(Student, Course)
