@@ -28,7 +28,7 @@ class Student:
     print("Age:", self.__std_age)
     print("DoB:", self.__std_DoB)
     
-  def addMark(self, name, mark):
+  def __setattr__(self, name, mark):
     self.setattr(self, name, mark)
     
 class Course:
@@ -44,11 +44,10 @@ class Course:
     return self.__course_name
   
   def display(self):
-    print("--------------------------------")
     print("ID:", self.__course_id)
     print("Name:", self.__course_name)
 
-                 
+    
 class Function(Student, Course):
   
   def __init__(self):
@@ -70,10 +69,36 @@ class Function(Student, Course):
     
   def displayStudentList(self):
     print("----------------------------------------------------------------")
-    for y in range(self.__std_num):
+    for x in range(self.__std_num):
       print("--------------------------------")
-      print(f"Student number {y+1}")
-      self.__std_list[y].display()  
+      print(f"Student number {x+1}")
+      self.__std_list[x].display()  
+      
+  def getCourseInfo(self):
+    for x in range(self.__course_num):
+      print(f"Course number {x+1}")
+      self.__course_list[x] = Course()
+      
+      
+  def displayCourseList(self):
+    print("----------------------------------------------------------------")
+    for x in range(self.__std_num):
+      print("--------------------------------")
+      print(f"Course number {x+1}")
+      self.__course_list[x].display()  
+      
+
+  def inputMark(self):
+    print("----------------------------------------------------------------")
+    c_id = int(input("Enter course ID: "))
+    for x in range(self.__course_num):
+      if c_id == self.__course_list[x].getCourseId():
+        name = self.__course_list[x].getCourseName()
+
+        
+    for x in range(self.__std_num):
+      mark = float(input(f"{self.__std_list[x].getStdName()}'s mark: "))
+      self.__std_list[x].addMark(name, mark)
       
   # def addMark(self):
   #   id = int(input("Enter course ID: "))
@@ -92,3 +117,8 @@ func = Function()
 
 func.getStdInfo()
 func.displayStudentList()
+
+func.getCourseInfo()
+func.displayCourseList()
+
+func.inputMark()
