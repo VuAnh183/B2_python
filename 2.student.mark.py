@@ -1,11 +1,11 @@
-class Student(Course):
+class Student:
   # Constructor 
-  def __init__(self):
-    print("--------------------------------")
-    self.__id = int(input("Enter student ID: "))
-    self.__name = input("Enter student name: ")
-    self.__age = int(input("Enter student age: "))
-    self.__DoB = input("Enter student DoB: ")
+  def __init__(self, id, name, DoB):
+    self.__id = id
+    self.__name = name
+    self.__DoB = DoB
+    self.__course = {}
+    
     
   def getStdId(self):
     return self.__id
@@ -19,31 +19,19 @@ class Student(Course):
   def getAge(self):
     return self.__age
   
+  def getCourse(self):
+    return self.__course
   
-  def display(self):
-    print("Student Info: ")
-    print("ID:", self.__id)
-    print("Name:", self.__name)
-    print("Age:", self.__age)
-    print("DoB:", self.__DoB)
+  def addCourse(self, course_id, course_name):
+    self.__course[course_id] = {"Name": course_name, "Mark": ""}
     
-    
-    
-  def addMark(self, name, mark):
-    setattr(self, name, mark)
-    print("Score updated!")
-    print(vars(self))
-    
-  def getMark(self, name):
-    return self.name
-  
-  
+  def addMark(self, course_id, mark):
+    self.__course[course_id]["Mark"] = mark
 
 class Course:
-  def __init__(self):
-    print("--------------------------------")
-    self.__course_id = int(input("Enter course ID: "))
-    self.__course_name = input("Enter course name: ")
+  def __init__(self, id, name):
+    self.__course_id = id
+    self.__course_name = name
   
   def getCourseId(self):
     return self.__course_id
@@ -51,16 +39,11 @@ class Course:
   def getCourseName(self): 
     return self.__course_name
   
-  def display(self):
-    print("ID:", self.__course_id)
-    print("Name:", self.__course_name)
 
     
 class Function(Student, Course):
   
   def __init__(self):
-    self.__std_num = int(input("Enter number of students: "))
-    self.__course_num = int(input("Enter number of courses: "))
     self.__std_list = {}
     self.__course_list = {}
   
@@ -70,54 +53,56 @@ class Function(Student, Course):
   def getCourseList(self):
     return self.__course_list
   
-  def getStdInfo(self):
-    for x in range(self.__std_num):
-      print(f"Student number {x+1}")
-      self.__std_list[x] = Student()
+  def add_student(self):
+    print("----------------------------------------------------------------")
+    std_num = int(input("Enter number of students: "))
     
+    for x in range(std_num):
+      print("----------------------")
+      print(f"Student number {x+1}")
+      try:
+        std_id = int(input("Enter student ID: "))
+        std_name = input("Enter student name: ")
+        std_DOB = input("Enter DOB: ")
+      except:
+        print("Invalid input!")
+        exit()
+      self.__std_list[std_id] = Student(std_id, std_name, std_DOB)
+      
+  def add_course(self):
+    print("----------------------------------------------------------------")
+    course_num = int(input("Enter number of courses: "))
+    
+    for x in range(course_num):
+      print("----------------------")
+      print(f"Course number {x+1}")
+      try:
+        course_id = int(input("Enter course ID: "))
+        course_name = input("Enter course name: ")
+      except:
+        print("Invalid input!")
+        exit()
+      self.__course_list[course_id] = Course(course_id, course_name)
+      for y in self.__std_list:
+        self.__std_list[y].addCourse(course_id, course_name)
+      
+      
   def displayStudentList(self):     
     print("----------------------------------------------------------------")
-    for x in range(self.__std_num):
-      print("--------------------------------")
-      print(f"Student number {x+1}")
-      self.__std_list[x].display()  
-    
-  def getCourseInfo(self):
-    for x in range(self.__course_num):
-      print(f"Course number {x+1}")
-      self.__course_list[x] = Course()
-      
-      
+    print("Student list:")
+    count = 1
+    for x in self.__std_list:
+      print(f"{count}) {self.__std_list[x].getStdName()}")
+      count += 1 
+            
   def displayCourseList(self):
     print("----------------------------------------------------------------")
-    for x in range(self.__std_num):
-      print("--------------------------------")
-      print(f"Course number {x+1}")
-      self.__course_list[x].display()  
+    print("Course list:")
+    count = 1
+    for x in self.__course_list:
+      print(f"{count}) {self.__course_list[x].getCourseName()}")
+      count += 1  
       
-
-  def inputMark(self):
-    print("----------------------------------------------------------------")
-    c_id = int(input("Enter course ID: "))
-    for x in range(self.__course_num):
-      if c_id == self.__course_list[x].getCourseId():
-        name = self.__course_list[x].getCourseName()
-
-        
-    for x in range(self.__std_num):
-      mark = float(input(f"{self.__std_list[x].getStdName()}'s mark: "))
-      self.__std_list[x].addMark(name, mark)
-      
-  def printMark(self):
-    name = input("Enter course name: ")
-    for x in range(self.__std_num):
-      print(f"{self.__std_list[x].getStdName()}'s mark: {self.__std_list[x].getMark(name)}")
-      print("--------------------------------------------------------")
-  def getStdNum(self):
-    return self.__std_num
-  
-  def getCourseNum(self):
-    return self.__course_num
 
   def listFuncion(self):
     print("LIST OF FUNCTIONS: \n")
@@ -158,11 +143,8 @@ class Function(Student, Course):
         
 func = Function()
 
-func.getStdInfo()
+func.add_student()
 func.displayStudentList()
-
-func.getCourseInfo()
+func.add_course()
 func.displayCourseList()
 
-func.inputMark()
-func.printMark()
