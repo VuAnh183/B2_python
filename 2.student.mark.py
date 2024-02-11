@@ -27,6 +27,9 @@ class Student:
     
   def addMark(self, course_id, mark):
     self.__course[course_id]["Mark"] = mark
+    
+  def getMark(self, course_id):
+    return self.__course[course_id]["Mark"]
 
 class Course:
   def __init__(self, id, name):
@@ -87,6 +90,23 @@ class Function(Student, Course):
         self.__std_list[y].addCourse(course_id, course_name)
       
       
+  def inputMark(self):
+    print("----------------------------------------------------------------")
+    c_id = int(input("Enter course ID: "))
+    for x in self.__std_list:
+      print("Enter", self.__std_list[x].getStdName(), "mark: ")
+      mark = input()
+      self.__std_list[x].addMark(c_id, mark)
+      
+      
+  def printMark(self):
+    print("----------------------------------------------------------------")
+    c_id = int(input("Enter course ID: "))
+    print(f"{self.__course_list[c_id].getCourseName()} marks: ")
+    for x in self.__std_list:
+      print(f"{self.__std_list[x].getStdName()}: {self.__std_list[x].getMark(c_id)}")
+      
+      
   def displayStudentList(self):     
     print("----------------------------------------------------------------")
     print("Student list:")
@@ -106,32 +126,42 @@ class Function(Student, Course):
 
   def listFuncion(self):
     print("LIST OF FUNCTIONS: \n")
-    print("1. List courses")
-    print("2. List student")
-    print("3. Input mark")
-    print("4. Print mark ")
-    print("5. Exit")
+    print("1. Add students")
+    print("2. Add courses")
+    print("3. List students")
+    print("4. List courses")
+    print("5. Input mark")
+    print("6. Print mark ")
+    print("7. Exit")
     print("---")
       
-    arg = int(input("Enter a function id: "))
+    arg = int(input("Choose a function: "))
     match arg:
-      case 1:
-        self.displayCourseList()
+      case 1: 
+        self.add_student()
         print("---")
         return self.listFuncion()
       case 2:
-        self.displayStudentList()
+        self.add_course()
         print("---")
         return self.listFuncion()
       case 3:
-        self.inputMark()
+        self.displayStudentList()
         print("---")
         return self.listFuncion()
       case 4:
-        print_mark(course, student)
+        self.displayCourseList()
         print("---")
         return self.listFuncion()
       case 5:
+        self.inputMark()
+        print("---")
+        return self.listFuncion()
+      case 6:
+        self.printMark()
+        print("---")
+        return self.listFuncion()
+      case 7:
         print("Exit")
         exit()
       case default:
@@ -143,8 +173,5 @@ class Function(Student, Course):
         
 func = Function()
 
-func.add_student()
-func.displayStudentList()
-func.add_course()
-func.displayCourseList()
+func.listFuncion()
 
