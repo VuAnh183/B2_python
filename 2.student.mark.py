@@ -4,9 +4,27 @@ class Student:
     self.__id = id
     self.__name = name
     self.__DoB = DoB
-    # self.__course = {}
+    self.__marks = {}
     
+  def getStdId(self):
+    return self.__id
   
+  def getStdName(self):
+    return self.__name
+  
+  def getStdDoB(self):
+    return self.__DoB
+  
+  def getStdMark(self):
+    return self.__marks
+  
+  def getMark(self, course_name):
+    return self.__marks.get(course_name)
+    
+  def input_mark(self, course_name, mark):
+    self.__marks[course_name] = mark
+    
+    
   def __str__(self):
     return f"Student ID: {self.__id}, Student Name: {self.__name}, Date of Birth: {self.__DoB}"
   
@@ -30,8 +48,7 @@ class Function(Student, Course):
   def __init__(self):
     self.__std_list = []
     self.__course_list = []
-    self.__student_mark = []
-    return self.__student_mark
+    
   
   def add_student(self):
     print("----------------------------------------------------------------")
@@ -68,9 +85,8 @@ class Function(Student, Course):
         
       self.__course_list.append(Course(course_id, course_name))
       
-      
+  #Input Student's mark    
   def inputMark(self):
-    marks = []
     print("----------------------------------------------------------------")
     try:
       c_name = input("Enter course name: ")
@@ -83,8 +99,7 @@ class Function(Student, Course):
     else:
       for student in self.__std_list:
         mark = float(input(f"Enter {student.getStdName()}'s mark: "))
-        marks.append((student.getStdName(), mark))
-        self.__student_mark.append({"Course": c_name, "Marks": marks})
+        student.input_mark(c_name, mark)
     
   # Display students marks 
   def printMark(self):
@@ -95,16 +110,15 @@ class Function(Student, Course):
     except:
       print("Invalid input!")
       exit()
+    
+    print(f"\nMarks for {c_name}:")
       
     # Get students name and mark
-    for mark in self.__student_mark:
-      if mark["Course"] == c_name:
-        print(f"\nMarks for {c_name}:")
-        for student, mark in mark["Marks"]:
-          print(f"{student}: {mark}")
+    for student in self.__std_list:
+      if c_name in student.getStdMark():
+        print(f"{student.getStdName()}: {student.getMark(c_name)}")
       else:
-        print("Unknown course!")
-        exit()
+        print(f"{student.getStdName()}: Unavailable")
       
   # Display student list
   def displayStudentList(self):     
@@ -189,7 +203,7 @@ class Function(Student, Course):
         print("---")
         return self.listFuncion()
         
-func = Function()
-
-func.listFuncion()
+if __name__ == "__main__":
+  func = Function()
+  func.listFuncion()
 
