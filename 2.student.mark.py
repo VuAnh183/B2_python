@@ -4,37 +4,12 @@ class Student:
     self.__id = id
     self.__name = name
     self.__DoB = DoB
-    self.__course = {}
+    # self.__course = {}
     
-    
-  def getStdId(self):
-    return self.__id
   
-  def getStdDoB(self):
-    return self.__DoB
+  def __str__(self):
+    return f"Student ID: {self.__id}, Student Name: {self.__name}, Date of Birth: {self.__DoB}"
   
-  def getStdName(self):
-    return self.__name
-  
-  def getAge(self):
-    return self.__age
-  
-  def getCourse(self):
-    return self.__course
-  
-  def addCourse(self, course_id, course_name):
-    # if course_name in self.__course.values() == True:
-      self.__course[course_id] = {"Name": course_name, "Mark": ""}
-      course_values = self.__course.values()
-      print(course_values)
-    # else: 
-      # print("Course already exists!")
-    
-  def addMark(self, course_id, mark):
-    self.__course[course_id]["Mark"] = mark
-    
-  def getMark(self, course_id):
-    return self.__course[course_id]["Mark"]
 
 class Course:
   def __init__(self, id, name):
@@ -47,19 +22,16 @@ class Course:
   def getCourseName(self): 
     return self.__course_name
   
-
+  def __str__(self):
+    return f"Course ID: {self.__course_id}, Course Name: {self.__course_name}"
     
 class Function(Student, Course):
   
   def __init__(self):
-    self.__std_list = {}
-    self.__course_list = {}
-  
-  def getStudentList(self):
-    return self.__std_list
-  
-  def getCourseList(self):
-    return self.__course_list
+    self.__std_list = []
+    self.__course_list = []
+    self.__student_mark = []
+    return self.__student_mark
   
   def add_student(self):
     print("----------------------------------------------------------------")
@@ -75,7 +47,9 @@ class Function(Student, Course):
       except:
         print("Invalid input!")
         exit()
-      self.__std_list[std_id] = Student(std_id, std_name, std_DOB)
+        
+        
+      self.__std_list.append(Student(std_id, std_name, std_DOB))
       
   def add_course(self):
     print("----------------------------------------------------------------")
@@ -90,31 +64,47 @@ class Function(Student, Course):
       except:
         print("Invalid input!")
         exit()
-      self.__course_list[course_id] = Course(course_id, course_name)
-      for y in self.__std_list:
-        self.__std_list[y].addCourse(course_id, course_name)
+        
+        
+      self.__course_list.append(Course(course_id, course_name))
       
       
   def inputMark(self):
+    marks = []
     print("----------------------------------------------------------------")
-    c_id = int(input("Enter course ID: "))
-    for x in self.__std_list:
-      print("Enter", self.__std_list[x].getStdName(), "mark: ")
-      mark = input()
-      self.__std_list[x].addMark(c_id, mark)
+    try:
+      c_name = input("Enter course name: ")
+    except:
+      print("Invalid input!")
+      exit()
       
-  
+    if len(self.__std_list) == 0:
+      print("Please add students before trying this function again!")
+    else:
+      for student in self.__std_list:
+        mark = float(input(f"Enter {student.getStdName()}'s mark: "))
+        marks.append((student.getStdName(), mark))
+        self.__student_mark.append({"Course": c_name, "Marks": marks})
+    
   # Display students marks 
   def printMark(self):
     print("----------------------------------------------------------------")
-    c_id = int(input("Enter course ID: "))
     
-    # Get course name from list
-    print(f"{self.__course_list[c_id].getCourseName()} marks: ")
-    
+    try:
+      c_name = input("Enter course name: ")
+    except:
+      print("Invalid input!")
+      exit()
+      
     # Get students name and mark
-    for x in self.__std_list:
-      print(f"{self.__std_list[x].getStdName()}: {self.__std_list[x].getMark(c_id)}")
+    for mark in self.__student_mark:
+      if mark["Course"] == c_name:
+        print(f"\nMarks for {c_name}:")
+        for student, mark in mark["Marks"]:
+          print(f"{student}: {mark}")
+      else:
+        print("Unknown course!")
+        exit()
       
   # Display student list
   def displayStudentList(self):     
@@ -127,10 +117,8 @@ class Function(Student, Course):
       print("Please add students before trying this function again!") 
       
     # Display students names
-    count = 1
-    for x in self.__std_list:
-      print(f"{count}) {self.__std_list[x].getStdName()}")
-      count += 1 
+    for student in self.__std_list:
+      print(student)
   
   # Display course list 
   def displayCourseList(self):
@@ -143,10 +131,8 @@ class Function(Student, Course):
       print("Please add courses before trying this function again!") 
     
     # Display courses names
-    count = 1
-    for x in self.__course_list:
-      print(f"{count}) {self.__course_list[x].getCourseName()}")
-      count += 1  
+    for course in self.__course_list:
+      print(course)
       
 
   # List of functions
@@ -165,32 +151,32 @@ class Function(Student, Course):
     match arg:
       case 1: 
         self.add_student()
-        print("\n\n\n")
+        print("\n\n")
         print("---")
         return self.listFuncion()
       case 2:
         self.add_course()
-        print("\n\n\n")
+        print("\n\n")
         print("---")
         return self.listFuncion()
       case 3:
         self.displayStudentList()
-        print("\n\n\n")
+        print("\n\n")
         print("---")
         return self.listFuncion()
       case 4:
         self.displayCourseList()
-        print("\n\n\n")
+        print("\n\n")
         print("---")
         return self.listFuncion()
       case 5:
         self.inputMark()
-        print("\n\n\n")
+        print("\n\n")
         print("---")
         return self.listFuncion()
       case 6:
         self.printMark()
-        print("\n\n\n")
+        print("\n\n")
         print("---")
         return self.listFuncion()
       case 7:
@@ -199,7 +185,7 @@ class Function(Student, Course):
       case default:
         print("Invalid")
         print("--------------------------------")
-        print("\n\n\n")
+        print("\n\n")
         print("---")
         return self.listFuncion()
         
