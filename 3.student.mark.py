@@ -171,11 +171,22 @@ class Function(Student, Course):
   def calGPA(self):
     print("----------------------------------------------------------------")
     if len(self.__std_list) == 0:
-      print("Please add students before trying this function again!")
+        print("Please add students before trying this function again!")
     else:
-      for student in self.__std_list:
-        print(f"{student.getStdName()}'s GPA: {student.getGPA()}")
+        #Create a list to store student's name and GPA
+        gpa = [(student.getStdName(), student.getGPA()) for student in self.__std_list]
         
+        #Convert it to numpy array
+        gpa_array = np.array(gpa)
+        
+        # Sort the array in ascending order
+        sorted_indices = np.argsort(gpa_array[:, 1])[::-1] 
+        # Reverse the array for descending order
+        sorted_gpas = gpa_array[sorted_indices]
+      
+        print("Students sorted by GPA in descending order:")
+        for name, gpa in sorted_gpas:
+            print(f"{name}: {gpa}")
   # List of functions
   def listFuncion(self):
     print("LIST OF FUNCTIONS: \n")
