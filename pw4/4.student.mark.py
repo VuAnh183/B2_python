@@ -1,4 +1,4 @@
-from pw4.Function import Function
+from Function import Function
 
     
 if __name__ == "__main__":

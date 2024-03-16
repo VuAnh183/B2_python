@@ -1,7 +1,7 @@
 import math 
 import numpy as np
-from pw4.Student import Student
-from pw4.Course import Course
+from Student import Student
+from Course import Course
 
 class Function:
   
